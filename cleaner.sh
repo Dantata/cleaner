@@ -30,8 +30,8 @@ clean:
 	destroy_admin_sessions
 	cleanup_sessions
 	reset_admin_passwords
+	list_oldplugins - Plugins that were NOT installed during past 15 minutes
 
-list_oldplugins - Plugins that were NOT installed during past 15 minutes
 "
 }
 
@@ -55,6 +55,7 @@ function clean {
 	destroy_admin_sessions
 	cleanup_sessions
 	reset_admin_passwords
+	list_oldplugins
 	}
 
 # pre-cleanup functions:
@@ -136,6 +137,16 @@ function update_themes {
 	$WP theme update --all
 	}
 
+function reinstall_plugins {
+	echo "\nRe-installing all active plugins:\n---"
+	$WP plugin list --field=name --status=active | xargs -I {} wp plugin install {} --force
+	}
+
+function reinstall_themes {
+	echo "\nRe-installing all active themes:\n---"
+	$WP theme list --field=name --status=active | xargs -I {} wp theme install {} --force
+	}
+
 function destroy_admin_sessions {
 	echo -e "\nDestroying any admin sessions:\n---"
 	$WP user list --role=administrator --field=ID | xargs -I {} $WP user session destroy {}
@@ -153,8 +164,7 @@ function reset_admin_passwords {
 	echo -e "\nResetting passwords of administrators:\n---"
 	$WP user list --role=administrator --field=ID | xargs -I {} $WP user reset-password {}
 	}
-##
-# MISC
+	
 function list_oldplugins {
     # list plugins that have most probably not been reinstalled by this script
 	echo "Plugins that were NOT installed during past 15 minutes:"
