@@ -10,7 +10,7 @@ function help {
 
 Usage:
 
-** CWD to the WordPress directory before running the script ** 
+** Navigate to the WordPress directory before running the script ** 
 
 ls:
 	check_wp_version
