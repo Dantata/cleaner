@@ -13,7 +13,7 @@ Usage:
 
 ** CWD to the WordPress directory before running the script ** 
 
-gather_information:
+ls:
 	check_wp_version
 	check_themes
 	check_plugins
@@ -22,7 +22,7 @@ gather_information:
 	user_list
 	list-sessions
 
-cleanup:
+clean:
 	reinstall_core
 	delete_inactive_plugins
 	delete_inactive_themes
@@ -37,7 +37,7 @@ list_oldplugins - Plugins that were NOT installed during past 15 minutes
 }
 
 
-function gather_information {
+function ls {
 	check_wp_version
 	check_themes
 	check_plugins
@@ -47,7 +47,7 @@ function gather_information {
 	list-sessions
 	}
 
-function cleanup {
+function clean {
 	reinstall_core
 	delete_inactive_plugins
 	delete_inactive_themes
@@ -166,6 +166,4 @@ function list_oldplugins {
 if [[ -z "$1" ]]; then
     help
 fi
-#gather_information
-#cleanup 
 $1
