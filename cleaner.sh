@@ -152,7 +152,7 @@ function cleanup_sessions {
 
 function reset_admin_passwords {
 	echo -e "\nResetting passwords of administrators:\n---"
-	$WP user list --role=administrator --field=ID | xargs -I {} $WP user reset-password {
+	$WP user list --role=administrator --field=ID | xargs -I {} $WP user reset-password {}
 	}
 ##
 # MISC
