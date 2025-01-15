@@ -30,9 +30,7 @@ clean:
 	destroy_admin_sessions
 	cleanup_sessions
 	reset_admin_passwords
-	list_oldplugins - Plugins that were NOT installed during past 15 minutes
-
-"
+	list_oldplugins - Plugins that were NOT installed during past 15 minutes"
 }
 
 
