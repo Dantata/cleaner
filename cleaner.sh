@@ -95,9 +95,9 @@ function list_sessions {
 	users=$($WP user list --field=id | sort)
 
 	for user in $users; do
-	  echo "Active sessions for user "$user":"
-	  $WP user session list $user
-	  echo "session_tokens (active and expired) for user $user:"
+	  echo "Active sessions for user \"$user\":"
+	  $WP user session list "$user"
+	  echo "session_tokens (active and expired) for user \"$user\":"
 	  $WP user meta get $user session_tokens
 	  
 	done
