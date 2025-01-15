@@ -2,7 +2,7 @@
 
 # Variables
 WP_PATH="$PWD"
-WP="/usr/local/bin/wp --path="$WP_PATH" --skip-themes --skip-plugins"
+WP="$(which wp) --path="$WP_PATH" --skip-themes --skip-plugins"
 export SHELL_PIPE=0
 
 function help {
