@@ -4,14 +4,14 @@ Usage:
 
 ** CWD to the WordPress directory before running the script ** 
 
-gather_information:
-	check_wp_version
-	check_themes
-	check_plugins
-	verify_core
-	verify_plugins
-	user_list
-	list-sessions
+gather_information:  
+	check_wp_version  
+	check_themes  
+	check_plugins  
+	verify_core  
+	verify_plugins  
+	user_list  
+	list-sessions  
 
 cleanup:
 	reinstall_core
