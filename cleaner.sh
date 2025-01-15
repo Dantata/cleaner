@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Variables
-WP_PATH="$PWD"
-WP="$(which wp) --path="$WP_PATH" --skip-themes --skip-plugins"
+WP="$(which wp) --path="$PWD" --skip-themes --skip-plugins"
 export SHELL_PIPE=0
 
 function help {
@@ -62,9 +61,9 @@ function clean {
 
 function check_wp_version {
 	echo -e "\nWordPress Version:\n---"
-	WP_LANGUAGE=$($WP language core list --status=active --field=language)
-    WP_VERSION=$($WP core version)
-	echo -e "WP_VERSION: " $WP_VERSION "\nWP_LANGUAGE: " $WP_LANGUAGE | column -t
+	WPLANGUAGE=$($WP language core list --status=active --field=language)
+    WPVERSION=$($WP core version)
+	echo -e "WPVERSION: " $WPVERSION "\nWPLANGUAGE: " $WPLANGUAGE | column -t
 	}
 
 function check_themes {
@@ -107,11 +106,11 @@ function list-sessions {
 # cleanup functions:
 
 function reinstall_core {
-	WP_LANGUAGE=$($WP language core list --status=active --field=language)
-	WP_VERSION=$($WP core version)
-	echo -e "\nReinstalling WP core (Version: $WP_VERSION, Language: $WP_LANGUAGE):\n---"
+	WPLANGUAGE=$($WP language core list --status=active --field=language)
+	WPVERSION=$($WP core version)
+	echo -e "\nReinstalling WP core (Version: $WPVERSION, Language: $WPLANGUAGE):\n---"
  	rm -rf $WP_PATH/wp-admin $WP_PATH/wp-includes
- 	$WP core download --force --skip-content --version=$WP_VERSION --locale=$WP_LANGUAGE
+ 	$WP core download --force --skip-content --version=$WPVERSION --locale=$WPLANGUAGE
 	# good bye, dolly...
 	#rm -f wp-content/plugins/hello.php
 	#rm -rf wp-content/plugins/hello-dolly	
