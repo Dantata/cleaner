@@ -11,6 +11,8 @@ function help {
 
 Usage:
 
+** CWD to the WordPress directory before running the script ** 
+
 gather_information:
 	check_wp_version
 	check_themes
