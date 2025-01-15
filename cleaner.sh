@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variables
-WP="$(which wp) --path="$PWD" --skip-themes --skip-plugins"
+WP="$(which wp) --path=$PWD --skip-themes --skip-plugins"
 export SHELL_PIPE=0
 
 function help {
@@ -19,7 +19,7 @@ ls:
 	verify_core
 	verify_plugins
 	user_list
-	list-sessions
+	list_sessions
 
 clean:
 	reinstall_core
@@ -43,7 +43,7 @@ function ls {
 	verify_core
 	verify_plugins
 	user_list
-	list-sessions
+	list_sessions
 	}
 
 function clean {
@@ -63,7 +63,7 @@ function check_wp_version {
 	echo -e "\nWordPress Version:\n---"
 	WPLANGUAGE=$($WP language core list --status=active --field=language)
     WPVERSION=$($WP core version)
-	echo -e "WPVERSION: " $WPVERSION "\nWPLANGUAGE: " $WPLANGUAGE | column -t
+	echo -e "WP Version: " "$WPVERSION" "\nWP Language: " "$WPLANGUAGE" | column -t
 	}
 
 function check_themes {
@@ -91,11 +91,11 @@ function user_list {
     $WP user list --role=administrator
 	}
 
-function list-sessions {
+function list_sessions {
 	users=$($WP user list --field=id | sort)
 
 	for user in $users; do
-	  echo "Active sessions for user $user:"
+	  echo "Active sessions for user "$user":"
 	  $WP user session list $user
 	  echo "session_tokens (active and expired) for user $user:"
 	  $WP user meta get $user session_tokens
