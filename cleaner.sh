@@ -107,6 +107,7 @@ function list-sessions {
 function reinstall_core {
 	WP_LANGUAGE=$($WP language core list --status=active --field=language)
 	WP_VERSION=$($WP core version)
+	echo "\nReinstalling WP core (Version: $WP_VERSION, Language: $WP_LANGUAGE):\n---"
  	rm -rf $WP_PATH/wp-admin $WP_PATH/wp-includes
  	$WP core download --force --skip-content --version=$WP_VERSION --locale=$WP_LANGUAGE
 	# good bye, dolly...
