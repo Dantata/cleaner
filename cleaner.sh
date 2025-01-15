@@ -93,13 +93,13 @@ function user_list {
 	}
 
 function list-sessions {
-	users=$(wp user list --field=id | sort)
+	users=$($WP user list --field=id | sort)
 
 	for user in $users; do
 	  echo "Active sessions for user $user:"
-	  wp user session list $user
+	  $WP user session list $user
 	  echo "session_tokens (active and expired) for user $user:"
-	  wp user meta get $user session_tokens
+	  $WP user meta get $user session_tokens
 	  
 	done
 }
@@ -119,12 +119,12 @@ function reinstall_core {
 
 function delete_inactive_plugins {
 	echo -e "\nDeleting inactive plugins:\n---"
-    $WP plugin list --field=name --status=inactive | xargs -I {} wp plugin delete {}
+    $WP plugin list --field=name --status=inactive | xargs -I {} $WP plugin delete {}
 	}
 
 function delete_inactive_themes {
 	echo -e "\nDeleting inactive themes:\n---"
-	$WP theme list --field=name --status=inactive | xargs -I {} wp theme delete {}
+	$WP theme list --field=name --status=inactive | xargs -I {} $WP theme delete {}
 	}
 	
 function update_plugins {
@@ -139,11 +139,11 @@ function update_themes {
 
 function destroy_admin_sessions {
 	echo -e "\nDestroying any admin sessions:\n---"
-	$WP user list --role=administrator --field=ID | xargs -I {} wp user session destroy {}
+	$WP user list --role=administrator --field=ID | xargs -I {} $WP user session destroy {}
 	}
 
 function cleanup_sessions {
-	users=$(wp user list --field=id | sort)
+	users=$($WP user list --field=id | sort)
 	for user in $users; do
 	  echo "Destrotying sessions for user $user:"
 	  $WP user session destroy $user --all	  
@@ -152,7 +152,7 @@ function cleanup_sessions {
 
 function reset_admin_passwords {
 	echo -e "\nResetting passwords of administrators:\n---"
-	wp user list --role=administrator --field=ID | xargs -I {} wp user reset-password {
+	$WP user list --role=administrator --field=ID | xargs -I {} $WP user reset-password {
 	}
 ##
 # MISC
