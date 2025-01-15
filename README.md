@@ -5,22 +5,22 @@ Usage:
 ** CWD to the WordPress directory before running the script ** 
 
 gather_information:
-	check_wp_version
-	check_themes
-	check_plugins
-	verify_core
-	verify_plugins
-	user_list
-	list-sessions
+&emsp;check_wp_version
+&emsp;check_themes
+&emsp;check_plugins
+&emsp;verify_core
+&emsp;verify_plugins
+&emsp;user_list
+&emsp;list-sessions
 
 cleanup:
-	reinstall_core
-	delete_inactive_plugins
-	delete_inactive_themes
-	update_plugins
-	update_themes
-	destroy_admin_sessions
-	cleanup_sessions
-	reset_admin_passwords
+&emsp;reinstall_core
+&emsp;delete_inactive_plugins
+&emsp;delete_inactive_themes
+&emsp;update_plugins
+&emsp;update_themes
+&emsp;destroy_admin_sessions
+&emsp;cleanup_sessions
+&emsp;reset_admin_passwords
 
 list_oldplugins - Plugins that were NOT installed during past 15 minutes
