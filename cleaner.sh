@@ -145,11 +145,11 @@ function check_disallow_file_mods {
 
 function reinstall_core {
 	WPLANGUAGE=$($WP language core list --status=active --field=language)
-	WPVERSION=$($WP core version)
+	#WPVERSION=$($WP core version)
+	WPVERSION="latest"
 	echo -e "\nReinstalling WP core (Version: $WPVERSION, Language: $WPLANGUAGE):\n---"
  	rm -rf $WP_PATH/wp-admin $WP_PATH/wp-includes
  	$WP core download --force --skip-content --version=$WPVERSION --locale=$WPLANGUAGE
-	# good bye, dolly...
 	#rm -f wp-content/plugins/hello.php
 	#rm -rf wp-content/plugins/hello-dolly	
 }
