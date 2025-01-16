@@ -265,6 +265,7 @@ favicon.ico
 cgi-bin")
 }
 
+
 function check_wp_config {
     if [ ! -f wp-config.php ]; then
         echo "Error: wp-config.php not found. Please run this script from the root folder of a WordPress installation."
@@ -280,5 +281,11 @@ function validate_and_run {
         exit 1
     fi
 }
+
+if [[ -z "$1" ]]; then
+    help
+    exit 0
+fi
+
 check_wp_config
 validate_and_run "$1"
