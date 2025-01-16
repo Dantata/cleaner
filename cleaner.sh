@@ -44,8 +44,8 @@ Commands:
     php_malware_scanner        - https://github.com/scr34m/php-malware-scanner
 
   untracked_files:
-    list_non_plugins           - Check for files/dirs in $PWD/wp-content/plugins that don't belong to a plugin
-    list_non_wp_files          - Check for files/dirs in $PWD that are not WordPress files (not recursive)
+    list_non_plugins           - Check for files/dirs in /wp-content/plugins that don't belong to a plugin
+    list_non_wp_files          - Check for files/dirs in the root WP directory that are not WordPress files (not recursive)
     "
 }
 
@@ -195,7 +195,7 @@ function destroy_admin_sessions {
 function cleanup_sessions {
 	users=$($WP user list --field=id | sort)
 	for user in $users; do
-	  echo "Destrotying sessions for user $user:"
+	  echo -e "\nDestrotying sessions for user $user:\n---"
 	  $WP user session destroy $user --all	  
 	done
 }
