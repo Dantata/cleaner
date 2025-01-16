@@ -45,7 +45,7 @@ Commands:
 
   untracked_files:
     list_non_plugins           - Check for files/dirs in $PWD/wp-content/plugins that don't belong to a plugin
-    list_non_wp_files          - Check for files/dirs in $PWD that are not WordPress files
+    list_non_wp_files          - Check for files/dirs in $PWD that are not WordPress files (not recursive)
     "
 }
 
