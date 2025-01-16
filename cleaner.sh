@@ -74,7 +74,7 @@ function clean {
 	cleanup_sessions
 	reset_admin_passwords
 	disable_comments
-	list_oldplugins
+	list_old_plugins
 }
 
 function scan {
@@ -205,7 +205,7 @@ function reset_admin_passwords {
 	$WP user list --role=administrator --field=ID | xargs -I {} $WP user reset-password {}
 	}
 	
-function list_oldplugins {
+function list_old_plugins {
     # list plugins that have most probably not been reinstalled by this script
 	echo "Plugins that were NOT installed during past 15 minutes:"
 	find wp-content/plugins -maxdepth 1 -mindepth 1 -type d -mmin +15 -exec basename {} \;
