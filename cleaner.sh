@@ -12,9 +12,9 @@ function help {
     echo "WordPress Cleanup 1.0
 
 Usage:
-  $0 [COMMAND]			
-  $0 check 		- would run all functions part of the list below
-  $0 check_wp_version	- will run only the specific function
+  $0 [COMMAND]
+  $0 check                   - Run all functions in the 'check' category
+  $0 check_wp_version        - Run a specific function
 
 Commands:
 
@@ -30,8 +30,8 @@ Commands:
 
   clean:
     reinstall_core             - Reinstall WordPress using the same version and language
-    delete_inactive_plugins    - Delete inactive plugins
-    delete_inactive_themes     - Delete inactive themes
+    cleanup_plugins            - Delete inactive plugins
+    cleanup_themes             - Delete inactive themes
     update_plugins             - Update all plugins
     update_themes              - Update all themes
     destroy_admin_sessions     - Destroy administrator sessions
@@ -69,8 +69,8 @@ function check {
 
 function clean {
 	reinstall_core
-	delete_inactive_plugins
-	delete_inactive_themes
+	cleanup_plugins
+	cleanup_themes
 	update_plugins
 	update_themes
 	reinstall_plugins
@@ -159,12 +159,12 @@ function reinstall_core {
 	#rm -rf wp-content/plugins/hello-dolly	
 }
 
-function delete_inactive_plugins {
+function cleanup_plugins {
 	echo -e "\nDeleting inactive plugins:\n---"
     $WP plugin list --field=name --status=inactive | xargs -I {} $WP plugin delete {}
 }
 
-function delete_inactive_themes {
+function cleanup_themes {
 	echo -e "\nDeleting inactive themes:\n---"
 	$WP theme list --field=name --status=inactive | xargs -I {} $WP theme delete {}
 }
