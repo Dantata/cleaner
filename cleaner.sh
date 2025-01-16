@@ -15,7 +15,8 @@ Usage:
   $0 [COMMAND]
   $0 check                   - Run all functions in the 'check' category
   $0 check_wp_version        - Run a specific function
-
+  $0 help        - Show this page
+  
 Commands:
 
   check:
