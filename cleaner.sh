@@ -35,6 +35,11 @@ clean:
 	
 scan:
 	php_malware_scanner
+
+
+non_wp_files:
+	list_non_plugins
+	list_non_wp_files
 	"
 }
 
@@ -232,7 +237,7 @@ function list_non_plugins {
 
 # Obtain list of WP files at root:
 # curl -s https://api.github.com/repos/WordPress/WordPress/git/trees/master?recursive=1 | jq -r '.tree[] | .path' | awk -F/ {'print $1'} | sort -u
-# will be hard-coding below since curl may be unavailable
+# will be hard-coding this below since curl may be unavailable
 function list_non_wp_files {
 	echo -e "\nLooking for non-WP files/dirs in root directory:\n---"
 	ls | grep -vxFf <(echo "index.php
