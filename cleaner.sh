@@ -166,12 +166,15 @@ function update_themes {
 
 function reinstall_plugins {
 	echo -e "\nRe-installing all active plugins:\n---"
-	$WP plugin list --field=name --status=active | xargs -I {} wp plugin install {} --force
+	#$WP plugin list --field=name --status=active | xargs -I {} wp plugin install {} --force
+	$WP plugin list --field=name --status=active | xargs -I {} sh -c 'echo "$(printf "%q": {})"; wp plugin install --force "$(printf "%q" {})" 2>&1 | grep "Success\|Error"'
 }
 
 function reinstall_themes {
 	echo -e "\nRe-installing all active themes:\n---"
-	$WP theme list --field=name --status=active | xargs -I {} wp theme install {} --force
+	#$WP theme list --field=name --status=active | xargs -I {} wp theme install {} --force
+	$WP theme list --field=name --status=active | xargs -I {} sh -c 'echo "$(printf "%q": {})"; wp theme install --force "$(printf "%q" {})" 2>&1 | grep "Success\|Error"'
+
 }
 
 function destroy_admin_sessions {
