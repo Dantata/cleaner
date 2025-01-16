@@ -281,4 +281,4 @@ function validate_and_run {
     fi
 }
 check_wp_config
-validate_and_run "$1"default "$1"
+validate_and_run "$1"
