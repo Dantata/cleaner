@@ -36,10 +36,9 @@ clean:
 scan:
 	php_malware_scanner
 
-
-non_wp_files:
-	list_non_plugins
-	list_non_wp_files
+untracked_files:
+	list_non_plugins - check for files/dirs in /wp-content/plugins that not belong to a plugin
+	list_non_wp_files - check for files/dires in / that are not WP files
 	"
 }
 
@@ -81,7 +80,7 @@ function scan {
 	php_malware_scanner
 }
 
-function non_wp_files {
+function untracked_files {
 	list_non_plugins
 	list_non_wp_files
 }
