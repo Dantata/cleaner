@@ -237,7 +237,7 @@ function php_malware_scanner {
 
 function list_non_plugins {
 	echo -e "\nFiles/Directories at wp-content/plugins not listed as plugins:\n---"
-	ls wp-content/plugins | grep -vxFf <(wp plugin list --field=name)
+	find wp-content/plugins/ -maxdepth 1 -mindepth 1 -exec basename {} \; | grep -vxFf <(wp plugin list --field=name)
 }
 
 # Obtain list of WP files at root:
@@ -245,24 +245,26 @@ function list_non_plugins {
 # will be hard-coding this below since curl may be unavailable
 function list_non_wp_files {
 	echo -e "\nLooking for non-WP files/dirs in root directory:\n---"
-	ls | grep -vxFf <(echo "index.php
-wp-config.php
-wp-login.php
-xmlrpc.php
+	find . -maxdepth 1 -mindepth 1 -exec basename {} \; | grep -vxFf <(echo "index.php
+license.txt
+readme.html
 wp-activate.php
+wp-admin
+wp-blog-header.php
 wp-comments-post.php
+wp-config-sample.php
+wp-content
 wp-cron.php
+wp-includes
 wp-links-opml.php
 wp-load.php
+wp-login.php
 wp-mail.php
 wp-settings.php
 wp-signup.php
 wp-trackback.php
-wp-blog-header.php
-.htaccess
-wp-admin
-wp-content
-wp-includes")
+xmlrpc.php
+php.ini")
 }
 
 # main	
