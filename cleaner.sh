@@ -41,7 +41,8 @@ function default {
 		echo "wp-config.php not found - please run in the root folder of WordPress install!"
 		exit 1
 	fi
-
+	}
+	
 function ls {
 	check_wp_version
 	check_themes
@@ -110,15 +111,15 @@ function list_sessions {
 	  
 	done
 	}	
+	
 function check_disallow_file_mods {
 	echo -e "\nChecking for DISALLOW_FILE_MODS:\n---"
 	if grep "DISALLOW_FILE_MODS" wp-config.php; then
     :
-else
-    echo "DISALLOW_FILE_MODS not found in wp-config.php"
-fi
-
-}
+		else
+   		 echo "DISALLOW_FILE_MODS not found in wp-config.php"
+	fi
+	}
 
 # cleanup functions:
 
@@ -174,7 +175,7 @@ function cleanup_sessions {
 	  echo "Destrotying sessions for user $user:"
 	  $WP user session destroy $user --all	  
 	done
-}
+	}
 
 function reset_admin_passwords {
 	echo -e "\nResetting passwords of administrators:\n---"
