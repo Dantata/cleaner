@@ -38,7 +38,7 @@ Commands:
     destroy_admin_sessions     - Destroy administrator sessions
     cleanup_sessions           - Destroy all user sessions
     reset_admin_passwords      - Reset passwords for all administrators
-    list_oldplugins            - List plugins not installed in the past 15 minutes
+    list_old_plugins            - List plugins not installed in the past 15 minutes
 
   scan:
     php_malware_scanner        - https://github.com/scr34m/php-malware-scanner
