@@ -44,8 +44,8 @@ Commands:
     php_malware_scanner        - https://github.com/scr34m/php-malware-scanner
 
   untracked_files:
-    list_non_plugins           - Check for files/dirs in /wp-content/plugins that don't belong to a plugin
-    list_non_wp_files          - Check for files/dirs in / that are not WordPress files
+    list_non_plugins           - Check for files/dirs in $PWD/wp-content/plugins that don't belong to a plugin
+    list_non_wp_files          - Check for files/dirs in $PWD that are not WordPress files
     "
 }
 
