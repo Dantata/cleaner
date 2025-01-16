@@ -76,6 +76,11 @@ function scan {
 	php_malware_scanner
 }
 
+function non_wp_files {
+	list_non_plugins
+	list_non_wp_files
+}
+
 # pre-cleanup functions:
 
 function check_wp_version {
@@ -220,6 +225,35 @@ function php_malware_scanner {
 	php73.cli $TMP_DIR/scan.php -p -k -n -d $PWD -j $($WP core version) -w -c -s -t --disable-stats
 }
 
+function list_non_plugins {
+	echo -e "\nFiles/Directories at wp-content/plugins not listed as plugins:"
+	ls wp-content/plugins | grep -vxFf <(wp plugin list --field=name)
+}
+
+# Obtain list of WP files at root:
+# curl -s https://api.github.com/repos/WordPress/WordPress/git/trees/master?recursive=1 | jq -r '.tree[] | .path' | awk -F/ {'print $1'} | sort -u
+# will be hard-coding below since curl may be unavailable
+function list_non_wp_files {
+	echo -e "\nLooking for non-WP files/dirs in root directory:\n---"
+	ls | grep -vxFf <(echo "index.php
+		wp-config.php
+		wp-login.php
+		xmlrpc.php
+		wp-activate.php
+		wp-comments-post.php
+		wp-cron.php
+		wp-links-opml.php
+		wp-load.php
+		wp-mail.php
+		wp-settings.php
+		wp-signup.php
+		wp-trackback.php
+		wp-blog-header.php
+		.htaccess
+		wp-admin
+		wp-content
+		wp-includes")
+}
 
 # main	
 if [[ -z "$1" ]]; then
