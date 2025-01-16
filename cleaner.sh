@@ -35,7 +35,6 @@ clean:
 	
 scan:
 	php_malware_scanner
-	
 	"
 }
 
