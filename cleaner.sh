@@ -264,7 +264,11 @@ wp-settings.php
 wp-signup.php
 wp-trackback.php
 xmlrpc.php
-php.ini")
+php.ini
+.htaccess
+missing.html
+favicon.ico
+cgi-bin")
 }
 
 # main	
