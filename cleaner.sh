@@ -13,14 +13,14 @@ Usage:
 ** Navigate to the WordPress directory before running the script ** 
 
 check:
-	check_wp_version
-	check_themes
-	check_plugins
-	verify_core
-	verify_plugins
-	user_list
-	list_sessions
-	check_disallow_file_mods
+	check_wp_version - display the WordPress Version and Language
+	check_themes - list installed themes
+	check_plugins - list installed plugins
+	verify_core - run wp core verify-checksums
+	verify_plugins - run wp plugin verify-checksums --all
+	user_list - list all administrators
+	list_sessions - list all sessions
+	check_disallow_file_mods - check for DISALLOW_FILE_MODS in wp-config.php (would prevent updates)
 
 clean:
 	reinstall_core
