@@ -63,9 +63,12 @@ function clean {
 	delete_inactive_themes
 	update_plugins
 	update_themes
+	reinstall_plugins
+	reinstall_themes
 	destroy_admin_sessions
 	cleanup_sessions
 	reset_admin_passwords
+	disable_comments
 	list_oldplugins
 }
 
@@ -193,6 +196,11 @@ function list_oldplugins {
     # list plugins that have most probably not been reinstalled by this script
 	echo "Plugins that were NOT installed during past 15 minutes:"
 	find wp-content/plugins -maxdepth 1 -type d -mmin +15 -exec basename {} \;
+}
+
+function disable_comments {
+	echo -e "\nDisabling comments:\n---"
+	wp post list --format=ids | xargs wp post update --comment_status=closed
 }
 
 # scanning functions
