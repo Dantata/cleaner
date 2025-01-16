@@ -165,12 +165,12 @@ function update_themes {
 }
 
 function reinstall_plugins {
-	echo "\nRe-installing all active plugins:\n---"
+	echo -e "\nRe-installing all active plugins:\n---"
 	$WP plugin list --field=name --status=active | xargs -I {} wp plugin install {} --force
 }
 
 function reinstall_themes {
-	echo "\nRe-installing all active themes:\n---"
+	echo -e "\nRe-installing all active themes:\n---"
 	$WP theme list --field=name --status=active | xargs -I {} wp theme install {} --force
 }
 
