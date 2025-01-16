@@ -226,7 +226,7 @@ function php_malware_scanner {
 }
 
 function list_non_plugins {
-	echo -e "\nFiles/Directories at wp-content/plugins not listed as plugins:"
+	echo -e "\nFiles/Directories at wp-content/plugins not listed as plugins:\n---"
 	ls wp-content/plugins | grep -vxFf <(wp plugin list --field=name)
 }
 
@@ -236,23 +236,23 @@ function list_non_plugins {
 function list_non_wp_files {
 	echo -e "\nLooking for non-WP files/dirs in root directory:\n---"
 	ls | grep -vxFf <(echo "index.php
-		wp-config.php
-		wp-login.php
-		xmlrpc.php
-		wp-activate.php
-		wp-comments-post.php
-		wp-cron.php
-		wp-links-opml.php
-		wp-load.php
-		wp-mail.php
-		wp-settings.php
-		wp-signup.php
-		wp-trackback.php
-		wp-blog-header.php
-		.htaccess
-		wp-admin
-		wp-content
-		wp-includes")
+wp-config.php
+wp-login.php
+xmlrpc.php
+wp-activate.php
+wp-comments-post.php
+wp-cron.php
+wp-links-opml.php
+wp-load.php
+wp-mail.php
+wp-settings.php
+wp-signup.php
+wp-trackback.php
+wp-blog-header.php
+.htaccess
+wp-admin
+wp-content
+wp-includes")
 }
 
 # main	
