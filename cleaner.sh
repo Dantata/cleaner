@@ -21,6 +21,7 @@ Commands:
 
   check:
     check_wp_version           - Display the WordPress version and language
+    check_auto_updates           - Check if automatic updates are enabled
     check_themes               - List installed themes
     check_plugins              - List installed plugins
     verify_core                - Run 'wp core verify-checksums'
@@ -53,6 +54,7 @@ Commands:
 	
 function check {
 	check_wp_version
+	check_auto_updates
 	check_themes
 	check_plugins
 	verify_core
@@ -94,6 +96,11 @@ function check_wp_version {
     WPVERSION=$($WP core version)
 	echo -e "WP Version: " "$WPVERSION" "\nWP Language: " "$WPLANGUAGE"
 }
+
+function check_auto_updates {
+	echo -e "\nChecking if automatic updates are enabled:\n---"
+	$WP option list | grep -i auto_update_core_
+	}
 
 function check_themes {
 	echo -e "\nInstalled Themes:\n---"
