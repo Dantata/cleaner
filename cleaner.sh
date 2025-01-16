@@ -48,13 +48,7 @@ Commands:
     "
 }
 
-function default {
-	if [ ! -f wp-config.php ];
-	then
-		echo "wp-config.php not found - please run from the root folder of WordPress install."
-		exit 1
-	fi
-}
+
 	
 function check {
 	check_wp_version
@@ -271,15 +265,20 @@ favicon.ico
 cgi-bin")
 }
 
-# main	
-if [[ -z "$1" ]]; then
-    #help
-    default
-fi
+function check_wp_config {
+    if [ ! -f wp-config.php ]; then
+        echo "Error: wp-config.php not found. Please run this script from the root folder of a WordPress installation."
+        exit 1
+    fi
+}
 
-if [ "$1" == "help" ]; then
-	help
-	exit
-fi
-#default
-$1
+function validate_and_run {
+    if declare -f "$1" > /dev/null; then
+        "$1"
+    else
+        echo "Error: Invalid command '$1'. Use 'help' for a list of available commands."
+        exit 1
+    fi
+}
+check_wp_config
+validate_and_run "$1"default "$1"
