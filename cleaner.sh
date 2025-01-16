@@ -208,7 +208,7 @@ function reset_admin_passwords {
 function list_oldplugins {
     # list plugins that have most probably not been reinstalled by this script
 	echo "Plugins that were NOT installed during past 15 minutes:"
-	find wp-content/plugins -maxdepth 1 -type d -mmin +15 -exec basename {} \;
+	find wp-content/plugins -maxdepth 1 -mindepth 1 -type d -mmin +15 -exec basename {} \;
 }
 
 function disable_comments {
