@@ -12,7 +12,7 @@ Usage:
 
 ** Navigate to the WordPress directory before running the script ** 
 
-ls:
+check:
 	check_wp_version
 	check_themes
 	check_plugins
@@ -20,6 +20,7 @@ ls:
 	verify_plugins
 	user_list
 	list_sessions
+	check_disallow_file_mods
 
 clean:
 	reinstall_core
@@ -32,18 +33,21 @@ clean:
 	reset_admin_passwords
 	list_oldplugins - Plugins that were NOT installed during past 15 minutes
 	
+scan:
+	php_malware_scanner
+	
 	"
 }
 
 function default {
 	if [ ! -f wp-config.php ];
 	then
-		echo "wp-config.php not found - please run in the root folder of WordPress install!"
+		echo "wp-config.php not found - please run from the root folder of WordPress install."
 		exit 1
 	fi
-	}
+}
 	
-function ls {
+function check {
 	check_wp_version
 	check_themes
 	check_plugins
@@ -52,7 +56,7 @@ function ls {
 	user_list
 	list_sessions
 	check_disallow_file_mods
-	}
+}
 
 function clean {
 	reinstall_core
@@ -64,7 +68,11 @@ function clean {
 	cleanup_sessions
 	reset_admin_passwords
 	list_oldplugins
-	}
+}
+
+function scan {
+	php_malware_scanner
+}
 
 # pre-cleanup functions:
 
@@ -73,32 +81,32 @@ function check_wp_version {
 	WPLANGUAGE=$($WP language core list --status=active --field=language)
     WPVERSION=$($WP core version)
 	echo -e "WP Version: " "$WPVERSION" "\nWP Language: " "$WPLANGUAGE" | column -t
-	}
+}
 
 function check_themes {
 	echo -e "\nInstalled Themes:\n---"
 	$WP theme list
-	}
+}
 	
 function check_plugins {
 	echo -e "\nInstalled Plugins:\n---"
 	$WP plugin list
-	}
+}
 
 function verify_core {
 	echo -e "\nWP Core checksum:\n---"
     $WP core verify-checksums
-	}
+}
 	
 function verify_plugins {
 	echo -e "\nPlugins checksum:\n---"
     $WP plugin verify-checksums --all
-	}
+}
 	
 function user_list {
 	echo -e "\nWordPress Administrators:\n---"
     $WP user list --role=administrator
-	}
+}
 
 function list_sessions {
 	users=$($WP user list --field=id | sort)
@@ -110,7 +118,7 @@ function list_sessions {
 	  $WP user meta get $user session_tokens
 	  
 	done
-	}	
+}	
 	
 function check_disallow_file_mods {
 	echo -e "\nChecking for DISALLOW_FILE_MODS:\n---"
@@ -119,7 +127,7 @@ function check_disallow_file_mods {
 		else
    		 echo "DISALLOW_FILE_MODS not found in wp-config.php"
 	fi
-	}
+}
 
 # cleanup functions:
 
@@ -132,42 +140,42 @@ function reinstall_core {
 	# good bye, dolly...
 	#rm -f wp-content/plugins/hello.php
 	#rm -rf wp-content/plugins/hello-dolly	
-	}
+}
 
 function delete_inactive_plugins {
 	echo -e "\nDeleting inactive plugins:\n---"
     $WP plugin list --field=name --status=inactive | xargs -I {} $WP plugin delete {}
-	}
+}
 
 function delete_inactive_themes {
 	echo -e "\nDeleting inactive themes:\n---"
 	$WP theme list --field=name --status=inactive | xargs -I {} $WP theme delete {}
-	}
+}
 	
 function update_plugins {
 	echo -e "\nUpdating plugins:\n---"
 	$WP plugin update --all
-	}
+}
 	
 function update_themes {
 	echo -e "\nUpdating themes:\n---"
 	$WP theme update --all
-	}
+}
 
 function reinstall_plugins {
 	echo "\nRe-installing all active plugins:\n---"
 	$WP plugin list --field=name --status=active | xargs -I {} wp plugin install {} --force
-	}
+}
 
 function reinstall_themes {
 	echo "\nRe-installing all active themes:\n---"
 	$WP theme list --field=name --status=active | xargs -I {} wp theme install {} --force
-	}
+}
 
 function destroy_admin_sessions {
 	echo -e "\nDestroying any admin sessions:\n---"
 	$WP user list --role=administrator --field=ID | xargs -I {} $WP user session destroy {}
-	}
+}
 
 function cleanup_sessions {
 	users=$($WP user list --field=id | sort)
@@ -175,7 +183,7 @@ function cleanup_sessions {
 	  echo "Destrotying sessions for user $user:"
 	  $WP user session destroy $user --all	  
 	done
-	}
+}
 
 function reset_admin_passwords {
 	echo -e "\nResetting passwords of administrators:\n---"
@@ -188,9 +196,28 @@ function list_oldplugins {
 	find wp-content/plugins -maxdepth 1 -type d -mmin +15 -exec basename {} \;
 }
 
+# scanning functions
+
+function php_malware_scanner {
+	echo "\nRunning "PHP malware scanner"\n---"
+	TMP_DIR=$(mktemp -d /tmp/$USER-php-malware-scanner-XXXXXX)
+	cleanup() {
+   		 echo "Cleaning up temporary files..."
+   		 rm -rf "$TMP_DIR"
+	}
+	trap cleanup EXIT SIGINT SIGTERM
+	git clone https://github.com/scr34m/php-malware-scanner.git $TMP_DIR
+	php73.cli $TMP_DIR/scan.php -p -k -n -d $PWD -j $($WP core version) -w -c -s -t
+}
+
+
 # main	
 if [[ -z "$1" ]]; then
-    help
+    default
 fi
-default
+
+if [ "$1" == "help" ]; then
+	help
+fi
+#default
 $1
