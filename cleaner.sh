@@ -82,7 +82,7 @@ function check_wp_version {
 	echo -e "\nWordPress Version:\n---"
 	WPLANGUAGE=$($WP language core list --status=active --field=language)
     WPVERSION=$($WP core version)
-	echo -e "WP Version: " "$WPVERSION" "\nWP Language: " "$WPLANGUAGE" | column -t
+	echo -e "WP Version: " "$WPVERSION" "\nWP Language: " "$WPLANGUAGE"
 }
 
 function check_themes {
