@@ -1,45 +1,51 @@
 #!/bin/bash
 
-# Variables
-WP="$(which wp) --path=$PWD --skip-themes --skip-plugins"
+WP="$(which wp)"
+if [[ -z "$WP" && "$1" != "help" ]]; then
+    echo "Error: 'wp' command not found. Please ensure WP-CLI is installed and in your PATH."
+    exit 1
+fi
+WP="$WP --path=$PWD --skip-themes --skip-plugins"
 export SHELL_PIPE=0
 
 function help {
-
-	echo "WordPress cleanup 0.1
+    echo "WordPress Cleanup 1.0
 
 Usage:
+  $0 [COMMAND]			
+  $0 check 		- would run all functions part of the list below
+  $0 check_wp_version	- will run only the specific function
 
-** Navigate to the WordPress directory before running the script ** 
+Commands:
 
-check:
-	check_wp_version - display the WordPress Version and Language
-	check_themes - list installed themes
-	check_plugins - list installed plugins
-	verify_core - run wp core verify-checksums
-	verify_plugins - run wp plugin verify-checksums --all
-	user_list - list all administrators
-	list_sessions - list all sessions
-	check_disallow_file_mods - check for DISALLOW_FILE_MODS in wp-config.php (would prevent updates)
+  check:
+    check_wp_version           - Display the WordPress version and language
+    check_themes               - List installed themes
+    check_plugins              - List installed plugins
+    verify_core                - Run 'wp core verify-checksums'
+    verify_plugins             - Run 'wp plugin verify-checksums --all'
+    user_list                  - List all administrators
+    list_sessions              - List all sessions
+    check_disallow_file_mods   - Check for DISALLOW_FILE_MODS in wp-config.php (prevents updates)
 
-clean:
-	reinstall_core
-	delete_inactive_plugins
-	delete_inactive_themes
-	update_plugins
-	update_themes
-	destroy_admin_sessions
-	cleanup_sessions
-	reset_admin_passwords
-	list_oldplugins - Plugins that were NOT installed during past 15 minutes
-	
-scan:
-	php_malware_scanner
+  clean:
+    reinstall_core             - Reinstall WordPress using the same version and language
+    delete_inactive_plugins    - Delete inactive plugins
+    delete_inactive_themes     - Delete inactive themes
+    update_plugins             - Update all plugins
+    update_themes              - Update all themes
+    destroy_admin_sessions     - Destroy administrator sessions
+    cleanup_sessions           - Destroy all user sessions
+    reset_admin_passwords      - Reset passwords for all administrators
+    list_oldplugins            - List plugins not installed in the past 15 minutes
 
-untracked_files:
-	list_non_plugins - check for files/dirs in /wp-content/plugins that not belong to a plugin
-	list_non_wp_files - check for files/dires in / that are not WP files
-	"
+  scan:
+    php_malware_scanner        - https://github.com/scr34m/php-malware-scanner
+
+  untracked_files:
+    list_non_plugins           - Check for files/dirs in /wp-content/plugins that don't belong to a plugin
+    list_non_wp_files          - Check for files/dirs in / that are not WordPress files
+    "
 }
 
 function default {
@@ -261,12 +267,13 @@ wp-includes")
 
 # main	
 if [[ -z "$1" ]]; then
-    help
+    #help
     default
 fi
 
 if [ "$1" == "help" ]; then
 	help
+	exit
 fi
 #default
 $1
