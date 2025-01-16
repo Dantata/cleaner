@@ -35,6 +35,12 @@ clean:
 	"
 }
 
+function default {
+	if [ ! -f wp-config.php ];
+	then
+		echo "wp-config.php not found - please run in the root folder of WordPress install!"
+		exit 1
+	fi
 
 function ls {
 	check_wp_version
@@ -44,6 +50,7 @@ function ls {
 	verify_plugins
 	user_list
 	list_sessions
+	check_disallow_file_mods
 	}
 
 function clean {
@@ -96,12 +103,21 @@ function list_sessions {
 	users=$($WP user list --field=id | sort)
 
 	for user in $users; do
-	  echo "Active sessions for user \"$user\":"
+	  echo -e "\nActive sessions for user \"$user\":\n---"
 	  $WP user session list "$user"
 	  echo "session_tokens (active and expired) for user \"$user\":"
 	  $WP user meta get $user session_tokens
 	  
 	done
+	}	
+function check_disallow_file_mods {
+	echo -e "\nChecking for DISALLOW_FILE_MODS:\n---"
+	if grep "DISALLOW_FILE_MODS" wp-config.php; then
+    :
+else
+    echo "DISALLOW_FILE_MODS not found in wp-config.php"
+fi
+
 }
 
 # cleanup functions:
@@ -175,4 +191,5 @@ function list_oldplugins {
 if [[ -z "$1" ]]; then
     help
 fi
+default
 $1
