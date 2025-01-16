@@ -199,20 +199,21 @@ function list_oldplugins {
 # scanning functions
 
 function php_malware_scanner {
-	echo "\nRunning "PHP malware scanner"\n---"
+	echo -e "\nRunning "PHP malware scanner"\n---"
 	TMP_DIR=$(mktemp -d /tmp/$USER-php-malware-scanner-XXXXXX)
 	cleanup() {
-   		 echo "Cleaning up temporary files..."
+   		 echo "Cleaning up temporary files (rm -rf $TMP_DIR)."
    		 rm -rf "$TMP_DIR"
 	}
 	trap cleanup EXIT SIGINT SIGTERM
-	git clone https://github.com/scr34m/php-malware-scanner.git $TMP_DIR
-	php73.cli $TMP_DIR/scan.php -p -k -n -d $PWD -j $($WP core version) -w -c -s -t
+	git clone https://github.com/scr34m/php-malware-scanner.git $TMP_DIR -q
+	php73.cli $TMP_DIR/scan.php -p -k -n -d $PWD -j $($WP core version) -w -c -s -t --disable-stats
 }
 
 
 # main	
 if [[ -z "$1" ]]; then
+    help
     default
 fi
 
