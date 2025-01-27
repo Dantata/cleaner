@@ -27,7 +27,7 @@ Commands:
     verify_core                - Run 'wp core verify-checksums'
     verify_plugins             - Run 'wp plugin verify-checksums --all'
     user_list                  - List all administrators
-    list_sessions              - List all sessions
+    list_admin_sessions              - List all sessions
     check_disallow_file_mods   - Check for DISALLOW_FILE_MODS in wp-config.php (prevents updates)
 
   clean:
@@ -60,7 +60,7 @@ function check {
 	verify_core
 	verify_plugins
 	user_list
-	list_sessions
+	list_admin_sessions
 	check_disallow_file_mods
 }
 
@@ -127,7 +127,7 @@ function user_list {
     $WP user list --role=administrator
 }
 
-function list_sessions {
+function list_admin_sessions {
 	users=$($WP user list --field=id | sort)
 
 	for user in $users; do
