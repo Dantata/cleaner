@@ -128,7 +128,7 @@ function user_list {
 }
 
 function list_admin_sessions {
-	users=$($WP user list --field=id | sort)
+	users=$($WP user list --role=administrator --field=id | sort)
 
 	for user in $users; do
 	  echo -e "\nActive sessions for user \"$user\":\n---"
