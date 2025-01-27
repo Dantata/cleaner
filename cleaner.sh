@@ -155,7 +155,7 @@ function reinstall_core {
 	#WPVERSION=$($WP core version)
 	WPVERSION="latest"
 	echo -e "\nReinstalling WP core (Version: $WPVERSION, Language: $WPLANGUAGE):\n---"
- 	rm -rf $WP_PATH/wp-admin $WP_PATH/wp-includes
+ 	rm -rf wp-admin/ wp-includes/
  	$WP core download --force --skip-content --version=$WPVERSION --locale=$WPLANGUAGE
 	#rm -f wp-content/plugins/hello.php
 	#rm -rf wp-content/plugins/hello-dolly	
