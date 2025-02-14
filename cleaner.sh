@@ -42,7 +42,7 @@ Commands:
     list_old_plugins           - List plugins not installed in the past 15 minutes
 
   clean_keep_wp_version:
-    same as above, but keep the current WP version
+    ** same as <clean>, but keep the current WP version
     reinstall_core_keep_version             - Reinstall WordPress using the currently installed version and language
 
 
