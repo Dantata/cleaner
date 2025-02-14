@@ -31,7 +31,7 @@ Commands:
     check_disallow_file_mods   - Check for DISALLOW_FILE_MODS in wp-config.php (prevents updates)
 
   clean:
-    reinstall_core             - Reinstall WordPress using the same version and language
+    reinstall_core             - Reinstall WordPress using the latest version and keeping the language
     cleanup_plugins            - Delete inactive plugins
     cleanup_themes             - Delete inactive themes
     update_plugins             - Update all plugins
@@ -157,8 +157,8 @@ function reinstall_core {
 	echo -e "\nReinstalling WP core (Version: $WPVERSION, Language: $WPLANGUAGE):\n---"
  	rm -rf wp-admin/ wp-includes/
  	$WP core download --force --skip-content --version=$WPVERSION --locale=$WPLANGUAGE
-	#rm -f wp-content/plugins/hello.php
-	#rm -rf wp-content/plugins/hello-dolly	
+	rm -f wp-content/plugins/hello.php
+	rm -rf wp-content/plugins/hello-dolly	
 }
 
 function cleanup_plugins {
