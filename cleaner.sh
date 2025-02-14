@@ -41,6 +41,11 @@ Commands:
     reset_admin_passwords      - Reset passwords for all administrators
     list_old_plugins           - List plugins not installed in the past 15 minutes
 
+  clean_keep_wp_version:
+    same as above, but keep the current WP version
+    reinstall_core_keep_version             - Reinstall WordPress using the currently installed version and language
+
+
   scan:
     php_malware_scanner        - https://github.com/scr34m/php-malware-scanner
 
@@ -66,6 +71,21 @@ function check {
 
 function clean {
 	reinstall_core
+	cleanup_plugins
+	cleanup_themes
+	update_plugins
+	update_themes
+	reinstall_plugins
+	reinstall_themes
+	destroy_admin_sessions
+	cleanup_sessions
+	reset_admin_passwords
+	disable_comments
+	list_old_plugins
+}
+
+function clean_keep_wp_version {
+	reinstall_core_keep_version
 	cleanup_plugins
 	cleanup_themes
 	update_plugins
@@ -154,6 +174,17 @@ function reinstall_core {
 	WPLANGUAGE=$($WP language core list --status=active --field=language)
 	#WPVERSION=$($WP core version)
 	WPVERSION="latest"
+	echo -e "\nReinstalling WP core (Version: $WPVERSION, Language: $WPLANGUAGE):\n---"
+ 	rm -rf wp-admin/ wp-includes/
+ 	$WP core download --force --skip-content --version=$WPVERSION --locale=$WPLANGUAGE
+	rm -f wp-content/plugins/hello.php
+	rm -rf wp-content/plugins/hello-dolly	
+}
+
+function reinstall_core_keep_version {
+	WPLANGUAGE=$($WP language core list --status=active --field=language)
+	WPVERSION=$($WP core version)
+	#WPVERSION="latest"
 	echo -e "\nReinstalling WP core (Version: $WPVERSION, Language: $WPLANGUAGE):\n---"
  	rm -rf wp-admin/ wp-includes/
  	$WP core download --force --skip-content --version=$WPVERSION --locale=$WPLANGUAGE
