@@ -299,11 +299,11 @@ wp-trackback.php
 xmlrpc.php
 php.ini
 .htaccess
+.htpasswd
 missing.html
 favicon.ico
 cgi-bin
-wp-config.php
-.htpasswd")
+wp-config.php")
 }
 
 
