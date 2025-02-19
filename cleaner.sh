@@ -182,7 +182,7 @@ function reinstall_core {
 }
 
 function reinstall_core_keep_version {
-	WPLANGUAGE=$($WP language core list --status=active --field=language)
+	WPLANGUAGE=$($WP language core list --status=active --field=language --skip-plugins --skip-themes)
 	WPVERSION=$($WP core version)
 	#WPVERSION="latest"
 	echo -e "\nReinstalling WP core (Version: $WPVERSION, Language: $WPLANGUAGE):\n---"
@@ -301,7 +301,8 @@ php.ini
 .htaccess
 missing.html
 favicon.ico
-cgi-bin")
+cgi-bin
+wp-config.php")
 }
 
 
