@@ -38,7 +38,6 @@ Commands:
     update_themes              - Update all themes
     reinstall_plugins          - Reinstall all plugins
     reinstall_themes           - Reinstall all themes
-
     destroy_admin_sessions     - Destroy administrator sessions
     cleanup_sessions           - Destroy all user sessions
     reset_admin_passwords      - Reset passwords for all administrators
