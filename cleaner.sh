@@ -272,7 +272,7 @@ function php_malware_scanner {
 
 function list_non_plugins {
 	echo -e "\nFiles/Directories at wp-content/plugins not listed as plugins:\n---"
-	find wp-content/plugins/ -maxdepth 1 -mindepth 1 -exec basename {} \; | grep -vxFf <(wp plugin list --field=name)
+	find wp-content/plugins/ -maxdepth 1 -mindepth 1 -exec basename {} \; | grep -vxFf <(wp plugin list --field=name --skip-plugins --skip-themes)
 }
 
 # Obtain list of WP files at root:
