@@ -173,7 +173,8 @@ function check_disallow_file_mods {
 # cleanup functions:
 
 function reinstall_core {
-	WPLANGUAGE=$($WP language core list --status=active --field=language --skip-plugins --skip-themes)
+	#WPLANGUAGE=$($WP language core list --status=active --field=language --skip-plugins --skip-themes)
+	WPLANGUAGE=$($WP core version --extra | grep "Package language:" | awk {'print $NF'})
 	#WPVERSION=$($WP core version)
 	WPVERSION="latest"
 	echo -e "\nReinstalling WP core (Version: $WPVERSION, Language: $WPLANGUAGE):\n---"
@@ -184,8 +185,10 @@ function reinstall_core {
 }
 
 function reinstall_core_keep_version {
-	WPLANGUAGE=$($WP language core list --status=active --field=language --skip-plugins --skip-themes)
-	WPVERSION=$($WP core version)
+	#WPLANGUAGE=$($WP language core list --status=active --field=language --skip-plugins --skip-themes)
+	#WPVERSION=$($WP core version)
+	WPLANGUAGE=$($WP core version --extra | grep "Package language:" | awk {'print $NF'})
+	WPVERSION=$($WP core version --extra | grep "WordPress version:" | awk {'print $NF'})
 	#WPVERSION="latest"
 	echo -e "\nReinstalling WP core (Version: $WPVERSION, Language: $WPLANGUAGE):\n---"
  	rm -rf wp-admin/ wp-includes/
