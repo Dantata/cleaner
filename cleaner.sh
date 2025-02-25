@@ -114,7 +114,9 @@ function untracked_files {
 
 function check_wp_version {
 	echo -e "\nWordPress Version:\n---"
-	WPLANGUAGE=$($WP language core list --status=active --field=language)
+	#WPLANGUAGE=$($WP language core list --status=active --field=language)
+	WPLANGUAGE=$($WP core version --extra | grep "Package language:" | awk {'print $NF'})
+
     WPVERSION=$($WP core version)
 	echo -e "WP Version: " "$WPVERSION" "\nWP Language: " "$WPLANGUAGE"
 }
