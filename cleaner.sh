@@ -234,7 +234,7 @@ function reinstall_themes {
 
 function destroy_admin_sessions {
 	echo -e "\nDestroying any admin sessions:\n---"
-	$WP user list --role=administrator --field=ID | xargs -I {} $WP user session destroy {}
+	$WP user list --role=administrator --field=ID | xargs -I {} $WP user session destroy {} --all
 }
 
 function cleanup_sessions {
