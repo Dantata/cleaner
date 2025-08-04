@@ -582,6 +582,7 @@ def get_available_functions():
         'list_old_plugins',
         'disable_comments',
         'cleanup_plugins',
+        'cleanup_themes',
         'php_malware_scanner'
     ]
 
