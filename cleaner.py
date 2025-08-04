@@ -290,10 +290,28 @@ def cleanup_plugins():
             logging.info(f"Successfully deleted {success_count}/{len(plugin_list)} plugins")
         else:
             logging.info("No inactive plugins found")
-def cleanup_themes():
-    """ Remove inactive themes """
-    run_command(f"{WPCLI_PATH} list --field=name --status=inactive | xargs -I {{}} {WPCLI_PATH} theme delete {{}}", "Deleting inactive plugins")
 
+def cleanup_themes():
+    inactive_themes = run_command(f"{WPCLI_PATH} theme list --field=name --status=inactive", silent=True)
+    
+    if inactive_themes:
+        theme_list = [theme.strip() for theme in inactive_themes.split('\n') if theme.strip()]
+        
+        if theme_list:
+            logging.info(f"Found {len(theme_list)} inactive themes to delete")
+            success_count = 0
+            
+            for theme in theme_list:
+                try:
+                    run_command(f"{WPCLI_PATH} theme delete {theme}", f"Deleting theme: {theme}")
+                    success_count += 1
+                except subprocess.CalledProcessError as e:
+                    logging.warning(f"Failed to delete theme {theme}: {e}")
+            
+            logging.info(f"Successfully deleted {success_count}/{len(theme_list)} themes")
+        else:
+            logging.info("No inactive themes found")
+            
 def update_plugins():
     """ Update all plugins """
     run_command(f"{WPCLI_PATH} plugin update --all",
@@ -650,6 +668,7 @@ def execute_scan_type(scan_type):
             reinstall_core,
             #update_core,
             cleanup_plugins,
+            cleanup_themes,
             update_plugins,
             reinstall_plugins,
             reinstall_themes,
