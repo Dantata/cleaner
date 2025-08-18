@@ -95,7 +95,7 @@ def ensure_wp_cli(path):
     env_flags = "SHELL_PIPE=0"
 
     try:
-        wpcli_path = run_command("which wp", "WP-CLI", silent=True).strip()
+        wpcli_path = run_command( "which wp", "WP-CLI", silent=True).strip()
         logging.debug(f"Found system WP-CLI: {wpcli_path}")
         return f"{env_flags} {wpcli_path} {wp_flags} {wp_path}"
     except subprocess.CalledProcessError:
@@ -517,6 +517,8 @@ def list_non_plugins():
         all_items = [item.strip() for item in result.split('\n') if item.strip()]
         files_string = " ".join(f'"{item}"' for item in all_items)
         run_command(f"cd {wp_path}/wp-content/plugins; stat -c '%n|%z' {files_string} | column -t -s '|'|  sort -k2,3", "Non-plugins in /wp-content/plugins (format: file ctime)")
+    else:
+        logging.info("No non-plugins found")
 
 def list_non_wp_files():
     """ List all files in the root not part of WordPress """
