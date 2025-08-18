@@ -188,12 +188,6 @@ def update_core():
                 "Updating the WordPress core",
                 timeout=900)  # 15 minutes
 
-def update_plugins():
-    """ Update all plugins """
-    run_command(f"{WPCLI_PATH} plugin update --all",
-                "Updating all plugins",
-                timeout=900)  # 15 minutes
-
 def list_users():
     """ List all administrators """
     run_command(f"{WPCLI_PATH} user list --role=administrator --format=table",
@@ -512,13 +506,18 @@ def php_malware_scanner():
 def list_non_plugins():
     """ List files/directories in /wp-content/plugins that don't show up at `wp plugin list` """
     wp_path = get_wp_path_from_wpcli()
-    result = run_command(f"find {wp_path}/wp-content/plugins/ -maxdepth 1 -mindepth 1 ! -name index.php -exec basename {{}} \; | grep -vxFf <({WPCLI_PATH} plugin list --field=name --skip-plugins --skip-themes)", "Files/directories in /wp-content/plugins that are NOT plugins", silent=True)
+    try:
+        result = run_command(f"find {wp_path}/wp-content/plugins/ -maxdepth 1 -mindepth 1 ! -name index.php -exec basename {{}} \; | grep -vxFf <({WPCLI_PATH} plugin list --field=name --skip-plugins --skip-themes)", "Files/directories in /wp-content/plugins that are NOT plugins", silent=True)
+    except subprocess.CalledProcessError as e:
+        if e.returncode == 1:
+            logging.info("No non-plugins found - all directories are properly registered WordPress plugins")
+            return
     if result:
         all_items = [item.strip() for item in result.split('\n') if item.strip()]
         files_string = " ".join(f'"{item}"' for item in all_items)
         run_command(f"cd {wp_path}/wp-content/plugins; stat -c '%n|%z' {files_string} | column -t -s '|'|  sort -k2,3", "Non-plugins in /wp-content/plugins (format: file ctime)")
     else:
-        logging.info("No non-plugins found")
+        logging.info("No non-plugins found - all directories are properly registered WordPress plugins")
 
 def list_non_wp_files():
     """ List all files in the root not part of WordPress """
