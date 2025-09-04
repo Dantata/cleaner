@@ -38,7 +38,7 @@ def run_command(command: str,
                 comment: str = None,
                 timeout: int = 600,
                 debug: bool = False,
-                continue_on_error: bool = False,
+                continue_on_error: bool = True,
                 silent: bool = False) -> str:
     """ Wrapper for bash commands """
     try:
