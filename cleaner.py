@@ -355,7 +355,7 @@ def get_plugin_version(plugin_name: str) -> str:
 def reinstall_plugin(plugin_name: str) -> bool:
     """Reinstall plugin, return True if successful."""
     try:
-        run_command(f"{WPCLI_PATH} plugin install {plugin_name} --force", silent=True)
+        run_command(f"{WPCLI_PATH} plugin install {plugin_name} --force", silent=False)
         return True
     except:
         return False
@@ -678,11 +678,11 @@ def execute_scan_type(scan_type):
             #update_core,
             cleanup_plugins,
             cleanup_themes,
-            update_plugins,
+            #update_plugins,
             reinstall_plugins,
             reinstall_themes,
             destroy_admin_sessions,
-            cleanup_sessions,
+            #cleanup_sessions,
             disable_comments,
             list_old_plugins,
             list_non_plugins
