@@ -202,7 +202,12 @@ def verify_core():
     """ Verify core checksums """
     run_command(f"{WPCLI_PATH} core verify-checksums",
                 "Verifying WP core files")
-
+                
+def verify_plugins():
+    """ Verify core checksums """
+    run_command(f"{WPCLI_PATH} plugin verify-checksums --all",
+                "Verifying WP core files")
+                
 def check_themes():
     """ List all themes """
     run_command(f"{WPCLI_PATH} theme list --format=table",
@@ -567,6 +572,7 @@ def get_available_functions():
         'check_auto_updates', 
         'check_plugins',
         'verify_core',
+        'verify_plugins',
         'check_themes',
         'list_users',
         'check_admin_sessions',
@@ -651,6 +657,7 @@ def execute_scan_type(scan_type):
             check_wp_version,
             check_auto_updates,
             verify_core,
+            verify_plugins,
             check_plugins,
             check_themes,
             list_users,
